@@ -12,7 +12,7 @@ app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
-  res.send('hello')
+  res.render('index')
 })
 
 app.listen(port, () => {
