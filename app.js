@@ -1,6 +1,8 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
+
+const routes = require('./routes/index')
 require('./config/mongoose')
 
 const app = express()
@@ -11,9 +13,9 @@ app.set('view engine', 'handlebars')
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.get('/', (req, res) => {
-  res.render('index')
-})
+app.use(express.static('public'))
+
+app.use(routes)
 
 app.listen(port, () => {
   console.log(`App is listening on http://localhost:${port}`)
