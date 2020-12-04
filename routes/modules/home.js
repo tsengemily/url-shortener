@@ -3,7 +3,9 @@ const router = express.Router()
 const URL = require('../../models/url')
 const generateURL = require('../../public/javascripts/generateURL')
 
-const host = 'http://localhost:3000/'
+const host = process.env.PORT
+  ? 'https://desolate-bastion-74565.herokuapp.com/'
+  : 'http://localhost:3000/'
 
 //首頁
 router.get('/', (req, res) => {
