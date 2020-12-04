@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   const inputurl = req.body.inputurl
 
-  //比對資料
+  //比對資料，回傳短網址
   URL.find({ originurl: inputurl })
     .lean()
     .then((url) => {
@@ -38,6 +38,22 @@ router.post('/', (req, res) => {
         res.render('index', { shorturl, host })
       }
     })
+    .catch((error) => console.log(error))
+})
+
+//短網址導回原本網頁
+router.get('/:shorturl', (req, res) => {
+  const shorturl = req.params.shorturl
+  URL.find({ shorturl: shorturl })
+    .lean()
+    .then((shorturl) => {
+      if (shorturl.length === 0) {
+        return res.render('index', { error: '這個短網址不存在!' })
+      } else {
+        res.redirect(shorturl[0].originurl)
+      }
+    })
+    .catch((error) => console.log(error))
 })
 
 module.exports = router
